@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:bone_care/screens/home_screen/home_screen.dart';
 import 'package:bone_care/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 // import 'signup_screen.dart'; 
@@ -147,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                        builder: (context) => const HomeScreen(),
                       ),
                     );
                   },
