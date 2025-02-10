@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     shadows: [
                       Shadow(
                         blurRadius: 10,
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.white.withOpacity(0.5),
                         offset: Offset(2, 2),
                       ),
                     ],
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     shadows: [
                       Shadow(
                         blurRadius: 10,
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.white.withOpacity(0.5),
                         offset: Offset(2, 2),
                       ),
                     ],
