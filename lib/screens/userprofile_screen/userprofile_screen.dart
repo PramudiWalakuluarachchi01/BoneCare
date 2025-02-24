@@ -2,245 +2,107 @@
 
 import 'package:flutter/material.dart';
 
-class UserprofileScreen extends StatefulWidget {
+class UserprofileScreen extends StatelessWidget {
   const UserprofileScreen({super.key});
 
   @override
-  State<UserprofileScreen> createState() => _UserprofileScreenState();
-}
-
-class _UserprofileScreenState extends State<UserprofileScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _dobController = TextEditingController();
-  final TextEditingController _mobileController = TextEditingController();
-
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        _dobController.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-      });
-    }
-  }
-
-  
-
-  @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 137, 189, 238),
-      body: Stack(
-        children: [
-          // Full-screen background image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/pic12.png', // Ensure this image exists in your assets folder
-              fit: BoxFit.cover, // Covers the entire screen
-            ),
-          ),
-          
-          // Content on top of the image
-          Positioned(
-            top: 90, // Adjust as needed
-            left: 20,
-            child: Text(
-              'User Profile',
-              style: TextStyle(
-                fontSize: 24,
-                fontFamily: 'Playfairdisplay',
-                fontWeight: FontWeight.bold,
-                color: Colors.white, // Adjust color based on image contrast
-                shadows: [
-                  Shadow(blurRadius: 10, color: Colors.white.withOpacity(0.5), offset: Offset(2, 2)),
-                ],
-              ),
-            ),
-          ),
-            Positioned(
-            top: 230, // Adjust as needed
-            right: 50,
-            left: 130,
-            child: Text(
-              'User Profile',
-              style: TextStyle(
-                fontSize: 24,
-                fontFamily: 'Playfairdisplay',
-                fontWeight: FontWeight.bold,
-                color: Colors.black, // Adjust color based on image contrast
-                shadows: [
-                  Shadow(blurRadius: 10, color: Colors.black.withOpacity(0.5), offset: Offset(2, 2)),
-                ],
-              ),
-            ),
-            
-          ),
-           Positioned(
-            top: 340,
-            left: 20,
-            right: 20,
-            child: TextField(
-              controller: _nameController,
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: 'Full Name',
-                labelStyle: TextStyle(color: const Color.fromARGB(255, 4, 4, 4)),
-                filled: true,
-                 fillColor: const Color.fromARGB(147, 203, 202, 202).withOpacity(0.9),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: size.width,
+          height: size.height,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  'assets/images/pic12.png',
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-           ),
-            Positioned(
-            top: 420,
-            left: 20,
-            right: 20,
-            child: TextField(
-              controller: _ageController,
-              keyboardType: TextInputType.number, // Ensures only numbers are entered
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: 'Age',
-                labelStyle: TextStyle(color: Colors.black),
-                filled: true,
-                 fillColor: const Color.fromARGB(147, 203, 202, 202).withOpacity(0.9),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
+              Positioned(
+                top: 50,
+                left: 20,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
-            ),
-            ),
-            Positioned(
-            top: 500,
-            left: 20,
-            right: 20,
-            child: TextField(
-              controller: _addressController,
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: 'Address',
-                labelStyle: TextStyle(color: Colors.black),
-                filled: true,
-                 fillColor: const Color.fromARGB(147, 203, 202, 202).withOpacity(0.9),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-           Positioned(
-            top: 580,
-            left: 20,
-            right: 20,
-            child: TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress, // Ensures proper email keyboard
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.black),
-                filled: true,
-                 fillColor: const Color.fromARGB(147, 203, 202, 202).withOpacity(0.9),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: 660,
-            left: 20,
-            right: 20,
-            child: TextField(
-              controller: _dobController,
-              readOnly: true, // Prevents manual input
-              onTap: () => _selectDate(context), // Opens date picker
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: 'Date of Birth',
-                labelStyle: TextStyle(color: Colors.black),
-                filled: true,
-                 fillColor: const Color.fromARGB(147, 203, 202, 202).withOpacity(0.9),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                suffixIcon: Icon(Icons.calendar_today, color: Colors.black), // Calendar icon
-              ),
-            ),
-          ),
-           Positioned(
-            top: 740,
-            left: 20,
-            right: 20,
-            child: TextField(
-              controller: _mobileController,
-              keyboardType: TextInputType.phone, // Ensures phone number input format
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: 'Mobile Number',
-                labelStyle: TextStyle(color: Colors.black),
-                filled: true,
-                 fillColor: const Color.fromARGB(147, 203, 202, 202).withOpacity(0.9),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-           Positioned(
-            bottom: 30,
-            left: 120,
-            right: 120,
-            child: GestureDetector(
-              onTap: () {
-                // You can implement the update functionality here
-                print("Profile Updated");
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 8, 45, 100),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10,
-                      color: Colors.black.withOpacity(0.5),
-                      offset: Offset(2, 6),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Text(
-                    'Update Profile',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Playfairdisplay',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+              Positioned(
+                top: 90,
+                left: 20,
+                child: Text(
+                  'User Profile',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: 'Playfairdisplay',
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                          blurRadius: 10,
+                          color: Colors.white.withOpacity(0.5),
+                          offset: Offset(2, 2)),
+                    ],
                   ),
                 ),
               ),
-            ),
-           ),
-        ],
+              Positioned(
+                top: 230,
+                left: 130,
+                right: 50,
+                child: Text(
+                  'User Profile',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: 'Playfairdisplay',
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    shadows: [
+                      Shadow(
+                          blurRadius: 10,
+                          color: Colors.black.withOpacity(0.5),
+                          offset: Offset(2, 2)),
+                    ],
+                  ),
+                ),
+              ),
+              _buildInfoField('Full Name', 'ABCD', 310),
+              _buildInfoField('Age', '25', 390),
+              _buildInfoField('Address', '123 Colombo', 470),
+              _buildInfoField('Email', 'ABCD@Ggmail.com', 550),
+              _buildInfoField('Date of Birth', '01/01/1998', 630),
+              _buildInfoField('Mobile Number', '1234567890', 710),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoField(String label, String value, double top) {
+    return Positioned(
+      top: top,
+      left: 20,
+      right: 20,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(147, 203, 202, 202).withOpacity(0.9),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          '$label: $value',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
     );
   }

@@ -22,6 +22,17 @@ class _OsteoporosisdetailsScreenState extends State<OsteoporosisdetailsScreen> {
             ),
           ),
 
+          Positioned(
+            top: 50,
+            left: 20,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
+              onPressed: () {
+                Navigator.pop(context); // Navigates back to Home Screen
+              },
+            ),
+          ),
+
           // Content over the image
           Positioned(
             top: MediaQuery.of(context).size.height * 0.1, // Adjust vertical position

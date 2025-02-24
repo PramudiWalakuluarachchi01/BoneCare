@@ -1,4 +1,31 @@
+import 'package:bone_care/screens/player_screen/player_screen.dart';
 import 'package:flutter/material.dart';
+// import 'player_screen.dart'; // Import PlayerScreen
+
+final videoUrls = [
+  'https://youtu.be/MSKBe2Gr-uA?si=-k5Br7_kj4jUJKeM',
+  'https://youtu.be/1f3Nz5WsUpE?si=iEtc7wjxsuXGI-bg',
+  'https://youtu.be/Bdmeei0kq34?si=-nsaDaxbfsJ_XZaq',
+  'https://youtu.be/GU17-w8a_hU?si=qxZIzkXkva2coqmy',
+  'https://youtu.be/tRnqF-AFFdw?si=BpRY-rPnlttiEwwc',
+  'https://youtu.be/1p63so9Cx-s?si=7ZXAn0_1Zgqvk5jy',
+  'https://youtu.be/0Hl2UTJw9D4?si=aKciRuHt2q4W0n7L',
+  'https://youtu.be/hOMEuX4yF1o?si=UgWJ3znzKvlXcMhg',
+];
+
+// Function to extract video ID from YouTube URL
+String getVideoId(String url) {
+  final uri = Uri.parse(url);
+
+  // If it's a short URL (youtu.be)
+  if (uri.host.contains('youtu.be')) {
+    return uri.pathSegments.first;
+  }
+
+  // If it's a standard YouTube URL
+  return uri.queryParameters['v'] ??
+      uri.pathSegments.last.split('?').first; // Handles extra params
+}
 
 class PlaylistScreen extends StatefulWidget {
   const PlaylistScreen({super.key});
@@ -14,36 +41,103 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
       backgroundColor: const Color.fromARGB(255, 137, 189, 238),
       body: Stack(
         children: [
-          // Image at the top of the screen
+          // Background Image at the Top
           Positioned(
             top: 0,
             left: 0,
             right: 0,
             child: Image.asset(
-              'assets/images/pic8.png', // Adjust this to the path of your image
-              width: MediaQuery.of(context).size.width, // Stretch the image across the screen width
-              fit: BoxFit.cover, // Ensures the image covers the top area properly
+              'assets/images/pic8.png',
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
             ),
           ),
-          
-          // Text in front of the image at the top
+          // Back Button
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.1, // Adjust based on where you want the text
+            top: 50,
+            left: 20,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          // Title Text
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.1,
             left: 30,
-            
-            child: Center(
+            child: const Center(
               child: Text(
-                'Playlist', // Your text here
+                'Playlist',
                 style: TextStyle(
                   fontSize: 24,
                   fontFamily: 'Playfairdisplay',
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   shadows: [
-                    Shadow(blurRadius: 10, color: Colors.black.withOpacity(0.5), offset: Offset(2, 2)),
+                    Shadow(
+                      blurRadius: 10,
+                      color: Colors.white,
+                      offset: Offset(2, 2),
+                    ),
                   ],
                 ),
                 textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          // List of Videos
+          Positioned.fill(
+            top: MediaQuery.of(context).size.height * 0.25,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: videoUrls.length,
+                      itemBuilder: (context, index) {
+                        final videoId = getVideoId(videoUrls[index]);
+                        print('Extracted Video ID: $videoId'); // Debugging
+                        final thumbnailUrl = 'https://img.youtube.com/vi/$videoId/mqdefault.jpg';
+
+                        return Card(
+                          color: Colors.white,
+                          elevation: 4.0,
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListTile(
+                            leading: Image.network(
+                              thumbnailUrl,
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(Icons.error, color: Colors.red);
+                              },
+                            ),
+                            title: Text(
+                              'Video ${index + 1}',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            trailing: const Icon(Icons.play_arrow),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PlayerScreen(videoId: videoId),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

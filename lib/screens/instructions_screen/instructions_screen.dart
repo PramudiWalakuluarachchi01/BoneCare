@@ -25,6 +25,17 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
               fit: BoxFit.cover,
             ),
           ),
+
+          Positioned(
+            top: 50,
+            left: 20,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
+              onPressed: () {
+                Navigator.pop(context); // Navigates back to Home Screen
+              },
+            ),
+          ),
           
           // Content Layer
           Positioned(

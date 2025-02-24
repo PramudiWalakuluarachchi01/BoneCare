@@ -1,14 +1,12 @@
-// ignore_for_file: deprecated_member_use
-
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:bone_care/screens/instructions_screen/instructions_screen.dart';
-import 'package:bone_care/screens/monthlyprogress_screen/monthlyprogress_screen.dart'; // Import MonthlyprogressScreen
+import 'package:bone_care/screens/menu_screen/menu_screen.dart';
+import 'package:bone_care/screens/monthlyprogress_screen/monthlyprogress_screen.dart';
 import 'package:bone_care/screens/osteoporosisdetails_screen/osteoporosisdetails_screen.dart';
 import 'package:bone_care/screens/playlist_screen/playlist_screen.dart';
 import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';
+import 'package:bone_care/screens/menu_screen/menu_screen.dart';
+import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final icons = <IconData>[Icons.home, Icons.chat, Icons.account_circle];
+  int selectedIndex = 0; // Track selected tab
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color.fromARGB(255, 137, 189, 238),
       body: Stack(
         children: [
+          // Background image
           SizedBox(
             width: double.infinity,
             height: MediaQuery.of(context).size.height * 0.9,
@@ -34,9 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
               fit: BoxFit.cover,
             ),
           ),
+          // Positioned content in the screen
           Positioned(
             top: 80,
-            left: 20,
+            left: 37,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 0),
+                SizedBox(height: 5),
                 Text(
                   'Start your physiotherapy here!',
                   style: TextStyle(
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 70),
+                SizedBox(height: 100),
                 Text(
                   'Categories',
                   style: TextStyle(
@@ -90,299 +90,148 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 40),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _buildCategory(
                       context,
-                      MaterialPageRoute(builder: (context) => PlaylistScreen()),
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 14),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(129, 253, 254, 255),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 10,
-                                    color: Colors.black.withOpacity(0.5),
-                                    offset: Offset(2, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/homepic1.png',
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit.contain,
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    'Video Guides',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'IndieFlower',
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 40),
-                            // Physiotherapy Instructions container (with navigation)
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          InstructionsScreen()),
-                                );
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 14),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(129, 253, 254, 255),
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.5),
-                                      offset: Offset(2, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/homepic2.png', // Physiotherapy Instructions image
-                                      height: 90,
-                                      width: 100,
-                                      fit: BoxFit.contain,
-                                    ),
-                                    SizedBox(height: 1),
-                                    Text(
-                                      'Physiotherapy',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'IndieFlower',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      'Instructions',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'IndieFlower',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      'assets/images/homepic1.png',
+                      'Video Guides',
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PlaylistScreen()),
                       ),
-                      SizedBox(width: 40),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Column(
-                          children: [
-                            // What is Osteoporosis? container with navigation
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          OsteoporosisdetailsScreen()),
-                                );
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 14),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(129, 253, 254, 255),
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.5),
-                                      offset: Offset(2, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/homepic3.png',
-                                      height: 90,
-                                      width: 100,
-                                      fit: BoxFit.contain,
-                                    ),
-                                    SizedBox(height: 1),
-                                    Text(
-                                      'What is',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'IndieFlower',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      'Osteoporosis?',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'IndieFlower',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 40),
-                            // Monthly Progress container with navigation to MonthlyprogressScreen
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          MonthlyprogressScreen()), // Navigate to MonthlyprogressScreen
-                                );
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 14),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(129, 253, 254, 255),
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.5),
-                                      offset: Offset(2, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/homepic4.png',
-                                      height: 100,
-                                      width: 100,
-                                      fit: BoxFit.contain,
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'Monthly Progress',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'IndieFlower',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                    ),
+                    SizedBox(width: 40),
+                    _buildCategory(
+                      context,
+                      'assets/images/homepic3.png',
+                      'What is Osteoporosis?',
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OsteoporosisdetailsScreen()),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _buildCategory(
+                      context,
+                      'assets/images/homepic2.png',
+                      'Physiotherapy Instructions',
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => InstructionsScreen()),
+                      ),
+                    ),
+                    SizedBox(width: 40),
+                    _buildCategory(
+                      context,
+                      'assets/images/homepic4.png',
+                      'Monthly Progress',
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MonthlyprogressScreen()),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          Positioned(
-            bottom: 80,
-            left: 20,
-            right: 20,
-            child: Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(129, 253, 254, 255),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 10,
-                    color: Colors.black.withOpacity(0.5),
-                    offset: Offset(2, 2),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Text(
-                  'Scan your X-ray here',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'IndieFlower',
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
-     bottomNavigationBar: AnimatedBottomNavigationBar(
-  backgroundColor: const Color.fromARGB(255, 5, 26, 71),
-  icons: icons,
-  activeIndex: 0,
-  activeColor: Colors.white, // Active icon color
-  inactiveColor: Colors.grey, // Inactive icon color
-  iconSize: 30,
-  gapLocation: GapLocation.none,
-  notchSmoothness: NotchSmoothness.softEdge,
-  leftCornerRadius: 20,
-  rightCornerRadius: 20,
-  onTap: (index) {
-    setState(() {
-      if (index == 2) { // Assuming the user icon is at index 2
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => UserprofileScreen()),
-        );
-      }
-    });
-  },
-),
+      bottomNavigationBar: CircleNavBar(
+        activeIcons: [
+          Icon(Icons.home, color: Colors.white),
+          Icon(Icons.chat, color: Colors.white),
+          Icon(Icons.account_circle, color: Colors.white),
+          Icon(Icons.settings, color: Colors.white),
+        ],
+        inactiveIcons: [
+          Icon(Icons.home, color: Colors.grey),
+          Icon(Icons.chat, color: Colors.grey),
+          Icon(Icons.account_circle, color: Colors.grey),
+          Icon(Icons.settings, color: Colors.grey),
+        ],
+        color: const Color.fromARGB(255, 5, 26, 71),
+        height: 60,
+        circleWidth: 60,
+        activeIndex: selectedIndex,
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
 
+          if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => UserprofileScreen()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MenuScreen()),
+            );
+          }
+        },
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        cornerRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        shadowColor: Colors.black38,
+        elevation: 5,
+      ),
+    );
+  }
+
+  Widget _buildCategory(BuildContext context, String imagePath, String title,
+      VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 180,
+        width: 150,
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(129, 253, 254, 255),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              color: Colors.black.withOpacity(0.5),
+              offset: Offset(2, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              imagePath,
+              height: 100,
+              width: 120,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(height: 10),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'IndieFlower',
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
