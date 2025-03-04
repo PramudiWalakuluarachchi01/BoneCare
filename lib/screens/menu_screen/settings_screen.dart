@@ -1,14 +1,14 @@
 import 'package:bone_care/screens/login_screen/login.dart';
 import 'package:flutter/material.dart';
 
-class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key});
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
 
   @override
-  State<MenuScreen> createState() => _MenuScreenState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> {
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

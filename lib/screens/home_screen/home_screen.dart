@@ -1,10 +1,9 @@
 import 'package:bone_care/screens/instructions_screen/instructions_screen.dart';
-import 'package:bone_care/screens/menu_screen/menu_screen.dart';
+import 'package:bone_care/screens/menu_screen/settings_screen.dart';
 import 'package:bone_care/screens/monthlyprogress_screen/monthlyprogress_screen.dart';
 import 'package:bone_care/screens/osteoporosisdetails_screen/osteoporosisdetails_screen.dart';
 import 'package:bone_care/screens/playlist_screen/playlist_screen.dart';
 import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';
-import 'package:bone_care/screens/menu_screen/menu_screen.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -178,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (index == 3) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MenuScreen()),
+              MaterialPageRoute(builder: (context) => SettingsScreen()),
             );
           }
         },

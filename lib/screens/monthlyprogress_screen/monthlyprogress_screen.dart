@@ -21,8 +21,7 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: const Color.fromARGB(255, 137, 189, 238),
-
+      backgroundColor: const Color.fromARGB(255, 137, 189, 238),
       body: Stack(
         children: [
           Positioned.fill(
@@ -49,7 +48,7 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                     shadows: [
+                    shadows: [
                       Shadow(
                           blurRadius: 10,
                           color: Colors.white.withOpacity(0.5),
@@ -62,11 +61,13 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 120.0, left: 20.0, right: 20.0, bottom: 20.0),
+              padding: const EdgeInsets.only(
+                  top: 120.0, left: 20.0, right: 20.0, bottom: 20.0),
               child: Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 178, 191, 201)?.withOpacity(0.9),
+                  color:
+                      const Color.fromARGB(255, 178, 191, 201).withOpacity(0.9),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -80,9 +81,11 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSection("Physiotherapy Tracking", isTaskCompletionCompleted, taskActiveStep),
+                    _buildSection("Physiotherapy Tracking",
+                        isTaskCompletionCompleted, taskActiveStep),
                     SizedBox(height: 20),
-                    _buildSection("Pain Level", isOverallProgressCompleted, overallActiveStep),
+                    _buildSection("Pain Level", isOverallProgressCompleted,
+                        overallActiveStep),
                   ],
                 ),
               ),
@@ -93,7 +96,8 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
     );
   }
 
-  Widget _buildSection(String title, List<List<bool>> progressList, List<int> activeSteps) {
+  Widget _buildSection(
+      String title, List<List<bool>> progressList, List<int> activeSteps) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -110,7 +114,9 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
           children: List.generate(4, (week) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              child: _buildProgressRow("W${week + 1}", progressList[week], activeSteps[week], (index) {
+              child: _buildProgressRow(
+                  "W${week + 1}", progressList[week], activeSteps[week],
+                  (index) {
                 setState(() {
                   if (progressList[week][index]) {
                     progressList[week][index] = false;
@@ -132,13 +138,15 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
     );
   }
 
-  Widget _buildProgressRow(String label, List<bool> isStepCompleted, int activeStep, Function(int) onTap) {
+  Widget _buildProgressRow(String label, List<bool> isStepCompleted,
+      int activeStep, Function(int) onTap) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           label,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         Row(
           children: List.generate(5, (stepIndex) {
@@ -170,7 +178,8 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
         ),
         Text(
           stepLabels[activeStep - 1],
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ],
     );
