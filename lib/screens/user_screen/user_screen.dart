@@ -56,37 +56,44 @@ class _UserScreenState extends State<UserScreen> {
               Positioned(
                 top: 50,
                 left: 20,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                  onPressed: () {
-                    Navigator.pop(context); // Navigates back to Home Screen
-                  },
+                right: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      icon:
+                          Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                      onPressed: () {
+                        Navigator.pop(context); // Navigates back
+                      },
+                    ),
+                    SizedBox(
+                        width: 10), // Adds space between the arrow and the text
+                    Text(
+                      'User',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'Playfairdisplay',
+                        fontWeight: FontWeight.bold,
+                        color: Colors
+                            .white, // Ensure it stands out on the background
+                        shadows: [
+                          Shadow(
+                            blurRadius: 10,
+                            color: Colors.white.withOpacity(0.5),
+                            offset: Offset(2, 2),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              // Content on top of the image
-              Positioned(
-                top: 90, // Adjust as needed
-                left: 20,
-                child: Text(
-                  'User Profile',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'Playfairdisplay',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white, // Adjust color based on image contrast
-                    shadows: [
-                      Shadow(
-                          blurRadius: 10,
-                          color: Colors.white.withOpacity(0.5),
-                          offset: Offset(2, 2)),
-                    ],
-                  ),
-                ),
-              ),
+
               Positioned(
                 top: 230, // Adjust as needed
                 right: 50,
-                left: 130,
+                left: 128,
                 child: Text(
                   'User Profile',
                   style: TextStyle(

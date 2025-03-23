@@ -52,7 +52,8 @@ class SignupScreen extends StatelessWidget {
                         labelText: 'Name',
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.9),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                     ),
                   ),
@@ -66,7 +67,8 @@ class SignupScreen extends StatelessWidget {
                         labelText: 'Email',
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.9),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                     ),
                   ),
@@ -80,7 +82,8 @@ class SignupScreen extends StatelessWidget {
                         labelText: 'Age',
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.9),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                     ),
                   ),
@@ -94,7 +97,8 @@ class SignupScreen extends StatelessWidget {
                         labelText: 'Password',
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.9),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                     ),
                   ),
@@ -105,26 +109,38 @@ class SignupScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 8, 45, 100),
-                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                     ),
                     child: const Text(
                       'Sign Up',
-                      style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Already have an account? ", style: TextStyle(fontSize: 14, color: Colors.black)),
+                      const Text("Already have an account? ",
+                          style: TextStyle(fontSize: 14, color: Colors.black)),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignupScreen()));
                         },
                         child: const Text(
                           "Sign In",
-                          style: TextStyle(fontSize: 14, color: Color.fromARGB(255, 9, 151, 245), fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 9, 151, 245),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],

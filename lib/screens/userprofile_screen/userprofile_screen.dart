@@ -25,30 +25,35 @@ class UserprofileScreen extends StatelessWidget {
               Positioned(
                 top: 50,
                 left: 20,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-              Positioned(
-                top: 90,
-                left: 20,
-                child: Text(
-                  'User Profile',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'Playfairdisplay',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                          blurRadius: 10,
-                          color: Colors.white.withOpacity(0.5),
-                          offset: Offset(2, 2)),
-                    ],
-                  ),
+                right: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      icon:
+                          Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    SizedBox(width: 10), // Spacing between the icon and text
+                    Text(
+                      'User Profile',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'Playfairdisplay',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 10,
+                            color: Colors.white.withOpacity(0.5),
+                            offset: Offset(2, 2),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Positioned(

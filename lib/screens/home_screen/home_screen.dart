@@ -1,10 +1,7 @@
 import 'package:bone_care/screens/instructions_screen/instructions_screen.dart';
-import 'package:bone_care/screens/menu_screen/settings_screen.dart';
 import 'package:bone_care/screens/monthlyprogress_screen/monthlyprogress_screen.dart';
 import 'package:bone_care/screens/osteoporosisdetails_screen/osteoporosisdetails_screen.dart';
 import 'package:bone_care/screens/playlist_screen/playlist_screen.dart';
-import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';
-import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,8 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 0; // Track selected tab
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,45 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: CircleNavBar(
-        activeIcons: [
-          Icon(Icons.home, color: Colors.white),
-          Icon(Icons.chat, color: Colors.white),
-          Icon(Icons.account_circle, color: Colors.white),
-          Icon(Icons.settings, color: Colors.white),
-        ],
-        inactiveIcons: [
-          Icon(Icons.home, color: Colors.grey),
-          Icon(Icons.chat, color: Colors.grey),
-          Icon(Icons.account_circle, color: Colors.grey),
-          Icon(Icons.settings, color: Colors.grey),
-        ],
-        color: const Color.fromARGB(255, 5, 26, 71),
-        height: 60,
-        circleWidth: 60,
-        activeIndex: selectedIndex,
-        onTap: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
-
-          if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => UserprofileScreen()),
-            );
-          } else if (index == 3) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()),
-            );
-          }
-        },
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        cornerRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        shadowColor: Colors.black38,
-        elevation: 5,
       ),
     );
   }

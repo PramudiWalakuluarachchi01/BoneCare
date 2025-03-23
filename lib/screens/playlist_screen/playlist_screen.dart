@@ -1,7 +1,7 @@
 import 'package:bone_care/screens/player_screen/player_screen.dart';
 import 'package:flutter/material.dart';
-// import 'player_screen.dart'; // Import PlayerScreen
 
+// List of video URLs
 final videoUrls = [
   'https://youtu.be/MSKBe2Gr-uA?si=-k5Br7_kj4jUJKeM',
   'https://youtu.be/1f3Nz5WsUpE?si=iEtc7wjxsuXGI-bg',
@@ -11,6 +11,18 @@ final videoUrls = [
   'https://youtu.be/1p63so9Cx-s?si=7ZXAn0_1Zgqvk5jy',
   'https://youtu.be/0Hl2UTJw9D4?si=aKciRuHt2q4W0n7L',
   'https://youtu.be/hOMEuX4yF1o?si=UgWJ3znzKvlXcMhg',
+];
+
+// List of video descriptions
+final videoDescriptions = [
+  'Learn basic osteoporosis exercises.',
+  'A series of physiotherapy techniques.',
+  'Strengthening exercises for bones.',
+  'Steps to improve bone density.',
+  'Simple daily stretches for bone health.',
+  'Therapeutic yoga for osteoporosis.',
+  'Posture improvement for better bone support.',
+  'Breathing exercises for bone relief.'
 ];
 
 // Function to extract video ID from YouTube URL
@@ -99,7 +111,6 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                       itemCount: videoUrls.length,
                       itemBuilder: (context, index) {
                         final videoId = getVideoId(videoUrls[index]);
-                        print('Extracted Video ID: $videoId'); // Debugging
                         final thumbnailUrl = 'https://img.youtube.com/vi/$videoId/mqdefault.jpg';
 
                         return Card(
@@ -113,14 +124,16 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                               height: 60,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
-                                return Icon(Icons.error, color: Colors.red);
+                                return const Icon(Icons.error, color: Colors.red);
                               },
                             ),
-                            title: Text(
-                              'Video ${index + 1}',
+                            // Remove title text (Video 1, 2, etc.)
+                            title: null,
+                            subtitle: Text(
+                              videoDescriptions[index],
                               style: const TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                color: Colors.black87, // Ensure it's visible
                               ),
                             ),
                             trailing: const Icon(Icons.play_arrow),

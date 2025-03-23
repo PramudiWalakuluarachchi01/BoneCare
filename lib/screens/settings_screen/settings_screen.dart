@@ -1,4 +1,7 @@
 import 'package:bone_care/screens/login_screen/login.dart';
+import 'package:bone_care/screens/terms_and_conditions/terms_and_conditions.dart';
+import 'package:bone_care/screens/user_screen/user_screen.dart';
+import 'package:bone_care/screens/support_screen/support_screen.dart'; // Import Support Screen
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -25,17 +28,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-
               const SizedBox(height: 170),
 
-              // First Container (Terms and Conditions)
-              textInsideContainer("Terms and Conditions", 50, 400,
-                  Colors.white.withOpacity(0.5), Colors.black),
+              // First Container (Terms and Conditions) - Now Clickable
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TermsAndConditionsScreen(),
+                    ),
+                  );
+                },
+                child: textInsideContainer("Terms and Conditions", 50, 400,
+                    Colors.white.withOpacity(0.5), Colors.black),
+              ),
               const SizedBox(height: 40),
 
-              // Second Container (Support)
-              textInsideContainer("Support", 50, 400,
-                  Colors.white.withOpacity(0.5), Colors.black),
+              // Second Container (Support) - Now Clickable
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SupportScreen(),
+                    ),
+                  );
+                },
+                child: textInsideContainer("Support", 50, 400,
+                    Colors.white.withOpacity(0.5), Colors.black),
+              ),
               const SizedBox(height: 20),
 
               const SizedBox(height: 106),
@@ -46,8 +68,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            const LoginScreen()), // Navigate to Login screen
+                        builder: (context) => const LoginScreen()), 
                   );
                 },
                 child: textInsideContainer("Sign Out", 70, 400,
@@ -56,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           Positioned(
-            top: 50,
+            top: 70,
             left: 20,
             child: Row(
               children: [
@@ -64,7 +85,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: const Icon(Icons.arrow_back,
                       color: Colors.white, size: 28),
                   onPressed: () {
-                    Navigator.pop(context); // Navigates back to Home Screen
+                    Navigator.pop(context);
                   },
                 ),
                 const Text(
@@ -92,11 +113,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               iconColor: Colors.white,
               onSelected: (value) {
                 if (value == 'Profile') {
-                  // Handle Profile navigation
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UserScreen(),
+                    ),
+                  );
                 }
               },
               itemBuilder: (BuildContext context) => [
-                const PopupMenuItem(value: 'Profile', child: Text('Profile')),
+                const PopupMenuItem(
+                  value: 'Profile',
+                  child: Text('Profile'),
+                ),
               ],
             ),
           ),
@@ -105,7 +134,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  // Function to create a container with styled text inside, adjustable width, and color
+  // Function to create a container with styled text inside
   Widget textInsideContainer(String content, double height, double width,
       Color bgColor, Color textColor,
       [double fontSize = 18]) {

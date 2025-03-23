@@ -4,7 +4,8 @@ class OsteoporosisdetailsScreen extends StatefulWidget {
   const OsteoporosisdetailsScreen({super.key});
 
   @override
-  State<OsteoporosisdetailsScreen> createState() => _OsteoporosisdetailsScreenState();
+  State<OsteoporosisdetailsScreen> createState() =>
+      _OsteoporosisdetailsScreenState();
 }
 
 class _OsteoporosisdetailsScreenState extends State<OsteoporosisdetailsScreen> {
@@ -35,9 +36,10 @@ class _OsteoporosisdetailsScreenState extends State<OsteoporosisdetailsScreen> {
 
           // Content over the image
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.1, // Adjust vertical position
+            top: MediaQuery.of(context).size.height *
+                0.1, // Adjust vertical position
             left: 20,
-            
+
             child: Center(
               child: Column(
                 children: [
@@ -68,13 +70,13 @@ class _OsteoporosisdetailsScreenState extends State<OsteoporosisdetailsScreen> {
                         fontFamily: 'Playfairdisplay',
                         fontWeight: FontWeight.bold,
                         color: Colors.white, // White text for readability
-                         shadows: [
-                        Shadow(
-                          blurRadius: 10,
-                          color: Colors.white.withOpacity(0.5),
-                          offset: Offset(2, 2),
-                        ),
-                      ],
+                        shadows: [
+                          Shadow(
+                            blurRadius: 10,
+                            color: Colors.white.withOpacity(0.5),
+                            offset: Offset(2, 2),
+                          ),
+                        ],
                       ),
                       textAlign: TextAlign.center,
                     ),
