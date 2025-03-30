@@ -1,8 +1,9 @@
-import 'package:bone_care/screens/login_screen/login.dart';
+import 'package:bone_care/providers/auth_provider.dart';
+import 'package:bone_care/screens/signin_screen/signin.dart';
 import 'package:bone_care/screens/terms_and_conditions/terms_and_conditions.dart';
-import 'package:bone_care/screens/user_screen/user_screen.dart';
-import 'package:bone_care/screens/support_screen/support_screen.dart'; // Import Support Screen
+import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -48,11 +49,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Second Container (Support) - Now Clickable
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  Provider.of<AuthProvider>(context, listen: false).signOut();
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SupportScreen(),
-                    ),
+                        builder: (context) => const SigninScreen()),
                   );
                 },
                 child: textInsideContainer("Support", 50, 400,
@@ -68,7 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LoginScreen()), 
+                        builder: (context) => const SigninScreen()),
                   );
                 },
                 child: textInsideContainer("Sign Out", 70, 400,
@@ -116,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const UserScreen(),
+                      builder: (context) => const UserprofileScreen(),
                     ),
                   );
                 }

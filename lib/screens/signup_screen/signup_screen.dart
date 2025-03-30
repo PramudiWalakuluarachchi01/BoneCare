@@ -8,6 +8,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    String? selectedGender; // Variable to hold selected gender
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 137, 189, 238),
@@ -90,6 +91,30 @@ class SignupScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: 300,
+                    child: DropdownButtonFormField<String>(
+                      value: selectedGender,
+                      items: ['Male', 'Female', 'Other']
+                          .map((gender) => DropdownMenuItem(
+                                value: gender,
+                                child: Text(gender),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        selectedGender = value!;
+                        userProvider.setGender(value);
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Gender',
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.9),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: 300,
                     child: TextField(
                       onChanged: (value) => userProvider.setPassword(value),
                       obscureText: true,
@@ -105,22 +130,28 @@ class SignupScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
-                      await userProvider.signUp();
+                      if (userProvider.isLoading) {
+                        return;
+                      }
+                      await userProvider.signUp(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 8, 45, 100),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 50, vertical: 15),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    child: userProvider.isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text(
+                            'Sign Up',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                   ),
                   const SizedBox(height: 20),
                   Row(

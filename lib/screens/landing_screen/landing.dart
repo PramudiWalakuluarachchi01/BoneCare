@@ -1,4 +1,4 @@
-import 'package:bone_care/screens/login_screen/login.dart';
+import 'package:bone_care/screens/signin_screen/signin.dart';
 import 'package:flutter/material.dart';
 
 class Landing extends StatefulWidget {
@@ -59,39 +59,39 @@ class _LandingState extends State<Landing> {
                 Text(
                   'Your trusted physiotherapy companion!',
                   style: TextStyle(
-                      fontFamily: 'IndieFlower', color: 
-                      const Color.fromARGB(255, 95, 95, 95)),
+                      fontFamily: 'IndieFlower',
+                      color: const Color.fromARGB(255, 95, 95, 95)),
                 ),
                 Text(
                   'Access personalized instructions, video',
                   style: TextStyle(
-                      fontFamily: 'IndieFlower', color: 
-                      const Color.fromARGB(255, 95, 95, 95)),
+                      fontFamily: 'IndieFlower',
+                      color: const Color.fromARGB(255, 95, 95, 95)),
                 ),
                 Text(
                   'guidance, and a supportive social',
                   style: TextStyle(
-                      fontFamily: 'IndieFlower', color: 
-                      const Color.fromARGB(255, 95, 95, 95)),
+                      fontFamily: 'IndieFlower',
+                      color: const Color.fromARGB(255, 95, 95, 95)),
                 ),
                 Text(
                   'platform. Let’s work together toward a',
                   style: TextStyle(
-                      fontFamily: 'IndieFlower', color: 
-                      const Color.fromARGB(255, 95, 95, 95)),
+                      fontFamily: 'IndieFlower',
+                      color: const Color.fromARGB(255, 95, 95, 95)),
                 ),
                 Text(
                   'stronger, healthier you!',
                   style: TextStyle(
                       fontFamily: 'IndieFlower',
-                      color: const Color.fromARGB(255, 95, 95, 95)) ,
+                      color: const Color.fromARGB(255, 95, 95, 95)),
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      MaterialPageRoute(builder: (context) => SigninScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

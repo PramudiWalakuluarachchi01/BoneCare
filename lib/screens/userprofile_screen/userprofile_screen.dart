@@ -1,13 +1,15 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:bone_care/providers/user_provider.dart';
 
 class UserprofileScreen extends StatelessWidget {
   const UserprofileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     final size = MediaQuery.sizeOf(context);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 137, 189, 238),
       body: SingleChildScrollView(
@@ -30,14 +32,13 @@ class UserprofileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
-                      icon:
-                          Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                      icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
                       onPressed: () {
                         Navigator.pop(context);
                       },
                     ),
-                    SizedBox(width: 10), // Spacing between the icon and text
-                    Text(
+                    const SizedBox(width: 10),
+                    const Text(
                       'User Profile',
                       style: TextStyle(
                         fontSize: 24,
@@ -45,43 +46,17 @@ class UserprofileScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         shadows: [
-                          Shadow(
-                            blurRadius: 10,
-                            color: Colors.white.withOpacity(0.5),
-                            offset: Offset(2, 2),
-                          ),
+                          Shadow(blurRadius: 10, color: Colors.white, offset: Offset(2, 2)),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              Positioned(
-                top: 230,
-                left: 130,
-                right: 50,
-                child: Text(
-                  'User Profile',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'Playfairdisplay',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    shadows: [
-                      Shadow(
-                          blurRadius: 10,
-                          color: Colors.black.withOpacity(0.5),
-                          offset: Offset(2, 2)),
-                    ],
-                  ),
-                ),
-              ),
-              _buildInfoField('Full Name', 'ABCD', 310),
-              _buildInfoField('Age', '25', 390),
-              _buildInfoField('Address', '123 Colombo', 470),
-              _buildInfoField('Email', 'ABCD@Ggmail.com', 550),
-              _buildInfoField('Date of Birth', '01/01/1998', 630),
-              _buildInfoField('Mobile Number', '1234567890', 710),
+              _buildInfoField('Full Name', userProvider.name, 310),
+              _buildInfoField('Age', userProvider.age, 390),
+              _buildInfoField('Email', userProvider.email, 470),
+              _buildInfoField('Gender', userProvider.gender, 550),
             ],
           ),
         ),
@@ -95,14 +70,14 @@ class UserprofileScreen extends StatelessWidget {
       left: 20,
       right: 20,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         decoration: BoxDecoration(
           color: const Color.fromARGB(147, 203, 202, 202).withOpacity(0.9),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(
           '$label: $value',
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             color: Colors.black,
             fontWeight: FontWeight.w500,

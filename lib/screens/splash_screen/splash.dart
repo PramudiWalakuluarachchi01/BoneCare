@@ -34,6 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
             color: const Color.fromARGB(255, 137, 189, 238),
             fontFamily: 'PlayfairDisplay',
           ),
+          
         ),
       ),
     );

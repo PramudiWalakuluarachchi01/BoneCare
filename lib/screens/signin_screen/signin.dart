@@ -1,24 +1,33 @@
-// ignore_for_file: deprecated_member_use
-
-import 'package:bone_care/screens/home_screen/home_screen.dart';
+import 'package:bone_care/providers/auth_provider.dart';
 import 'package:bone_care/screens/main_screen/main_screen.dart';
 import 'package:bone_care/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
-// import 'signup_screen.dart'; 
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SigninScreenState extends State<SigninScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (authProvider.isAuthenticated) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainScreen()),
+        );
+      }
+    });
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 137, 189, 238),
       body: Stack(
@@ -91,9 +100,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               labelText: 'Email',
-                              labelStyle: const TextStyle(color: Color.fromARGB(255, 187, 187, 187)),
+                              labelStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 187, 187, 187)),
                               filled: true,
-                              fillColor: const Color.fromARGB(255, 245, 245, 245).withOpacity(0.9),
+                              fillColor:
+                                  const Color.fromARGB(255, 245, 245, 245)
+                                      .withOpacity(0.9),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -110,9 +122,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             obscureText: true, // Hides the password
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              labelStyle: const TextStyle(color: Color.fromARGB(255, 187, 187, 187)),
+                              labelStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 187, 187, 187)),
                               filled: true,
-                              fillColor: const Color.fromARGB(255, 245, 245, 245).withOpacity(0.9),
+                              fillColor:
+                                  const Color.fromARGB(255, 245, 245, 245)
+                                      .withOpacity(0.9),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -122,12 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-
-                        
                         TextButton(
-                          onPressed: () {
-                           
-                          },
+                          onPressed: () {},
                           child: const Text(
                             'Forgot Password?',
                             style: TextStyle(
@@ -140,40 +151,58 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                
-                const SizedBox(height: 30), 
 
-                ElevatedButton( 
-                  onPressed: () {
-                    
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainScreen(),
+                const SizedBox(height: 30),
+
+                // Sign In Button with Loading Indicator
+                authProvider.isLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () async {
+                          final authProvider =
+                              Provider.of<AuthProvider>(context, listen: false);
+
+                          await authProvider.signIn(
+                            emailController.text.trim(),
+                            passwordController.text.trim(),
+                          );
+
+                          if (authProvider.isAuthenticated) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MainScreen()),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Invalid email or password"),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 8, 45, 100),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Text(
+                          'Sign In',
+                          style: TextStyle(
+                            fontFamily: 'PlayfairDisplay',
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 8, 45, 100),
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const Text(
-                    'Sign In',
-                    style: TextStyle(
-                      fontFamily: 'PlayfairDisplay',
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
 
-                const SizedBox(height: 20), 
+                const SizedBox(height: 20),
 
-              
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -183,7 +212,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        
                         Navigator.push(
                           context,
                           MaterialPageRoute(
