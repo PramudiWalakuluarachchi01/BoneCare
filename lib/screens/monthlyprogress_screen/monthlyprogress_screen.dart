@@ -1,4 +1,10 @@
+import 'dart:convert';
+
+import 'package:bone_care/services/api_url.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class MonthlyprogressScreen extends StatefulWidget {
   const MonthlyprogressScreen({super.key});
@@ -17,6 +23,66 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
   List<int> overallActiveStep = [1, 1, 1, 1];
 
   List<String> stepLabels = ["Very Low", "Low", "Medium", "High", "Very High"];
+  final String _baseUrl = apiUrl();
+  FlutterSecureStorage storage = const FlutterSecureStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserProgress();
+  }
+
+  Future<void> fetchUserProgress() async {
+    String userId = storage.read(key: "userId").toString();
+    final response =
+        await http.get(Uri.parse("$_baseUrl/api/progress/$userId"));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        for (int week = 0; week < 4; week++) {
+          String weekKey = "W${week + 1}";
+          String taskLevel = data[weekKey]["physiotherapy_level"];
+          String painLevel = data[weekKey]["pain_level"];
+
+          taskActiveStep[week] = stepLabels.indexOf(taskLevel) + 1;
+          overallActiveStep[week] = stepLabels.indexOf(painLevel) + 1;
+
+          for (int i = 0; i < 5; i++) {
+            isTaskCompletionCompleted[week][i] = i < taskActiveStep[week];
+            isOverallProgressCompleted[week][i] = i < overallActiveStep[week];
+          }
+        }
+      });
+    } else {
+      Logger().e("Failed to load user progress: ${response.body}");
+    }
+  }
+
+  Future<void> submitProgress() async {
+    String userId = storage.read(key: "userId").toString();
+    for (int week = 0; week < 4; week++) {
+      final response = await http.post(
+        Uri.parse("$_baseUrl/api/progress"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "user_id": userId,
+          "week_number": "W${week + 1}",
+          "physiotherapy_level": stepLabels[taskActiveStep[week] - 1],
+          "pain_level": stepLabels[overallActiveStep[week] - 1],
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        Logger().e("Failed to submit week ${week + 1}: ${response.body}");
+        // Optionally show an error message
+      }
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Progress saved successfully")),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,22 +92,23 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/images/pic11.png', // Path to your background image
+              'assets/images/pic11.png',
               fit: BoxFit.cover,
             ),
           ),
           Positioned(
             top: 50,
             left: 20,
+            right: 20,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
                   onPressed: () {
-                    Navigator.pop(context); // Navigates back to Home Screen
+                    Navigator.pop(context);
                   },
                 ),
-                SizedBox(width: 10),
                 Text(
                   'Monthly Progress',
                   style: TextStyle(
@@ -50,10 +117,17 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
                     color: Colors.white,
                     shadows: [
                       Shadow(
-                          blurRadius: 10,
-                          color: Colors.white.withOpacity(0.5),
-                          offset: Offset(2, 2)),
+                        blurRadius: 10,
+                        color: Colors.white.withOpacity(0.5),
+                        offset: Offset(2, 2),
+                      ),
                     ],
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: submitProgress,
+                  child: Text(
+                    "Save",
                   ),
                 ),
               ],
@@ -115,22 +189,18 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: _buildProgressRow(
-                  "W${week + 1}", progressList[week], activeSteps[week],
-                  (index) {
-                setState(() {
-                  if (progressList[week][index]) {
-                    progressList[week][index] = false;
-                    if (index + 1 == activeSteps[week]) {
-                      activeSteps[week]--;
+                "W${week + 1}",
+                progressList[week],
+                activeSteps[week],
+                (index) {
+                  setState(() {
+                    activeSteps[week] = index + 1;
+                    for (int i = 0; i < 5; i++) {
+                      progressList[week][i] = i <= index;
                     }
-                  } else {
-                    progressList[week][index] = true;
-                    if (activeSteps[week] < 5) {
-                      activeSteps[week]++;
-                    }
-                  }
-                });
-              }),
+                  });
+                },
+              ),
             );
           }),
         ),
@@ -146,7 +216,10 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
         Text(
           label,
           style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
         Row(
           children: List.generate(5, (stepIndex) {
@@ -179,7 +252,10 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
         Text(
           stepLabels[activeStep - 1],
           style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
       ],
     );

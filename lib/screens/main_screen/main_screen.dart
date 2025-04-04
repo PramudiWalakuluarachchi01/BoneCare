@@ -1,7 +1,7 @@
 import 'package:bone_care/screens/home_screen/home_screen.dart';
 import 'package:bone_care/screens/settings_screen/settings_screen.dart';
 import 'package:bone_care/screens/social_platform/social_platform.dart';
-import 'package:bone_care/screens/x-ray_detector/x-ray_detector.dart';
+import 'package:bone_care/screens/x-ray_detector/xray_detector.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 

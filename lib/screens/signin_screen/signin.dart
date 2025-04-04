@@ -1,5 +1,5 @@
 import 'package:bone_care/providers/authuser_provider.dart';
-import 'package:bone_care/screens/forget_password_screen/forget_password_screen.dart';
+import 'package:bone_care/screens/forget_password/forget_password_screen.dart';
 import 'package:bone_care/screens/main_screen/main_screen.dart';
 import 'package:bone_care/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';

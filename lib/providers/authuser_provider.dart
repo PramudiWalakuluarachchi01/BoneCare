@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';
 import 'package:bone_care/services/api_url.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class AuthUserProvider with ChangeNotifier {
   bool _isAuthenticated = false;
@@ -53,6 +55,7 @@ class AuthUserProvider with ChangeNotifier {
   Future<void> signIn(String email, String password) async {
     String apiUrl = "$_baseUrl/api/signin";
     _isLoading = true;
+    FlutterSecureStorage storage = const FlutterSecureStorage();
     setEmail(email);
     notifyListeners();
 
@@ -67,6 +70,7 @@ class AuthUserProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         _isAuthenticated = true;
+        storage.write(key: "userId", value: responseData["userId"].toString());
         notifyListeners();
       } else {
         _isAuthenticated = false;
@@ -155,50 +159,29 @@ class AuthUserProvider with ChangeNotifier {
 
         notifyListeners();
       } else {
-        print("Failed to fetch user profile");
+        Logger().e("Failed to fetch user profile");
       }
     } catch (error) {
-      print("Error fetching user profile: $error");
+      Logger().e("Error fetching user profile: $error");
     }
   }
 
-  // Request password reset
   Future<Map<String, dynamic>> requestPasswordReset(String email) async {
-    String apiUrl = "$_baseUrl/api/password-reset";
-    _isLoading = true;
-    notifyListeners();
+    final response = await http.post(
+      Uri.parse('$_baseUrl/api/forgotPassword'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email}),
+    );
+    return jsonDecode(response.body);
+  }
 
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"email": email}),
-      );
-
-      final responseData = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        _isLoading = false;
-        notifyListeners();
-        return {
-          'status': 'success',
-          'message': responseData['message'] ?? 'Password reset link sent.',
-        };
-      } else {
-        _isLoading = false;
-        notifyListeners();
-        return {
-          'status': 'error',
-          'message': responseData['error'] ?? 'Failed to send reset link.',
-        };
-      }
-    } catch (error) {
-      _isLoading = false;
-      notifyListeners();
-      return {
-        'status': 'error',
-        'message': 'Failed to request password reset. Please try again later.',
-      };
-    }
+  Future<Map<String, dynamic>> resetPassword(
+      String email, String newPassword) async {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/api/resetPassword'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'newPassword': newPassword}),
+    );
+    return jsonDecode(response.body);
   }
 }

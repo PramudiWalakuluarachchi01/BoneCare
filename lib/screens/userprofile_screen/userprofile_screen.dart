@@ -4,7 +4,6 @@ import 'package:bone_care/providers/authuser_provider.dart';
 import 'package:bone_care/services/api_url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:logger/web.dart';
 import 'package:provider/provider.dart';
 
 class UserProfileScreen extends StatefulWidget {
