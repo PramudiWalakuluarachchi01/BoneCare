@@ -1,4 +1,4 @@
-import 'package:bone_care/providers/user_provider.dart';
+import 'package:bone_care/providers/authuser_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +7,7 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<AuthUserProvider>(context);
     String? selectedGender; // Variable to hold selected gender
 
     return Scaffold(

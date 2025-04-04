@@ -28,7 +28,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 137, 189, 238), // Same as PlaylistScreen
+      backgroundColor:
+          const Color.fromARGB(255, 137, 189, 238), // Same as PlaylistScreen
       body: Stack(
         children: [
           // Background Image at the Top
@@ -83,7 +84,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
           // Video Player Positioned Below the Image
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.25, // Adjusted based on image height
+            top: MediaQuery.of(context).size.height *
+                0.25, // Adjusted based on image height
             left: 0,
             right: 0,
             child: Center(

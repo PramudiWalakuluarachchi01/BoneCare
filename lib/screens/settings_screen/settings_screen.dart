@@ -1,4 +1,4 @@
-import 'package:bone_care/providers/auth_provider.dart';
+import 'package:bone_care/providers/authuser_provider.dart';
 import 'package:bone_care/screens/signin_screen/signin.dart';
 import 'package:bone_care/screens/terms_and_conditions/terms_and_conditions.dart';
 import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';
@@ -49,7 +49,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Second Container (Support) - Now Clickable
               GestureDetector(
                 onTap: () {
-                  Provider.of<AuthProvider>(context, listen: false).signOut();
+                  Provider.of<AuthUserProvider>(context, listen: false)
+                      .signOut();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -117,7 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const UserprofileScreen(),
+                      builder: (context) => const UserProfileScreen(),
                     ),
                   );
                 }

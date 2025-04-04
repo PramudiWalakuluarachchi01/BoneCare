@@ -1,52 +1,55 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'dart:convert';
 
-class AuthProvider with ChangeNotifier {
-  bool _isAuthenticated = false;
-  bool _isLoading = false;
+// import 'package:bone_care/services/api_url.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
 
-  bool get isAuthenticated => _isAuthenticated;
-  bool get isLoading => _isLoading;
+// class AuthProvider with ChangeNotifier {
+//   bool _isAuthenticated = false;
+//   bool _isLoading = false;
 
-  Future<void> signIn(String email, String password) async {
-    const String apiUrl = "http://192.168.1.4:3000/api/signin"; // Update this with your actual API URL
+//   bool get isAuthenticated => _isAuthenticated;
+//   bool get isLoading => _isLoading;
+//   final String _baseUrl = apiUrl();
 
-    _isLoading = true;
-    notifyListeners();
+//   Future<void> signIn(String email, String password) async {
+//     String apiUrl = "$_baseUrl/api/signin";
 
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "email": email,
-          "password": password,
-        }),
-      );
+//     _isLoading = true;
+//     notifyListeners();
 
-      final responseData = jsonDecode(response.body);
+//     try {
+//       final response = await http.post(
+//         Uri.parse(apiUrl),
+//         headers: {"Content-Type": "application/json"},
+//         body: jsonEncode({
+//           "email": email,
+//           "password": password,
+//         }),
+//       );
 
-      if (response.statusCode == 200) {
-        _isAuthenticated = true;
-        notifyListeners();
-      } else {
-        _isAuthenticated = false;
-        notifyListeners();
-        throw Exception(responseData['message']);
-      }
-    } catch (error) {
-      _isAuthenticated = false;
-      notifyListeners();
-      rethrow;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
+//       final responseData = jsonDecode(response.body);
 
-  void signOut() {
-    _isAuthenticated = false;
-    notifyListeners();
-  }
-}
+//       if (response.statusCode == 200) {
+//         _isAuthenticated = true;
+//         notifyListeners();
+//       } else {
+//         _isAuthenticated = false;
+//         notifyListeners();
+//         throw Exception(responseData['message']);
+//       }
+//     } catch (error) {
+//       _isAuthenticated = false;
+//       notifyListeners();
+//       rethrow;
+//     } finally {
+//       _isLoading = false;
+//       notifyListeners();
+//     }
+//   }
+
+//   void signOut() {
+//     _isAuthenticated = false;
+//     notifyListeners();
+//   }
+// }
