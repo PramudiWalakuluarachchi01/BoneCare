@@ -1,6 +1,4 @@
 import 'package:bone_care/providers/authuser_provider.dart';
-import 'package:bone_care/screens/home_screen/home_screen.dart'; // Import HomeScreen
-import 'package:bone_care/screens/signin_screen/signin.dart';
 import 'package:bone_care/screens/support_screen/support_screen.dart';
 import 'package:bone_care/screens/terms_and_conditions/terms_and_conditions.dart';
 import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';

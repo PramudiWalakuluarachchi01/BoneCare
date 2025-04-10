@@ -1,10 +1,16 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bone_care/services/api_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:share_plus/share_plus.dart';
 
 class MonthlyprogressScreen extends StatefulWidget {
   const MonthlyprogressScreen({super.key});
@@ -87,6 +93,67 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
     );
   }
 
+  Future<void> downloadReport() async {
+    String? userId = await storage.read(key: "userId");
+    if (userId == null) return;
+
+    try {
+      // Fetching the data from the server (no PDF yet)
+      final response =
+          await http.get(Uri.parse("$_baseUrl/api/progress/$userId"));
+
+      // Check if the response is successful and contains the necessary data
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> progressData = jsonDecode(response.body);
+
+        // Create the PDF document
+        final pdf = pw.Document();
+        pdf.addPage(
+          pw.Page(
+            build: (pw.Context context) {
+              return pw.Center(
+                child: pw.Table.fromTextArray(
+                  context: context,
+                  data: [
+                    ['Week', 'Physiotherapy Level', 'Pain Level'],
+                    for (var entry in progressData.entries)
+                      [
+                        entry.key,
+                        entry.value['physiotherapy_level'],
+                        entry.value['pain_level'],
+                      ],
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+
+        // Get the app's internal directory to store the file
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/progress_report.pdf';
+        Logger().d("File path: $filePath");
+
+        // Save the PDF to the device's internal storage
+        final file = File(filePath);
+        await file.writeAsBytes(await pdf.save());
+
+        // Share the downloaded file
+        Share.shareXFiles([XFile(filePath)], text: 'Here is your progress report');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Failed to download report: ${response.statusCode}"),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to download report: $e")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,8 +175,8 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
                   child: Row(
                     children: [
                       IconButton(
-                        icon:
-                            Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                        icon: Icon(Icons.arrow_back,
+                            color: Colors.white, size: 28),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -181,6 +248,24 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
                     onPressed: submitProgress,
                     child: Text(
                       "Save",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[700],
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: downloadReport,
+                    child: Text(
+                      "Download PDF Report",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),

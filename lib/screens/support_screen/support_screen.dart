@@ -1,4 +1,3 @@
-import 'package:bone_care/screens/settings_screen/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class SupportScreen extends StatefulWidget {
@@ -77,29 +76,47 @@ class _SupportScreenState extends State<SupportScreen> {
                   SizedBox(height: 10),
                   const Text(
                     "1. How do I reset my password?",
-                    style: TextStyle(fontSize: 16, color: Colors.black,fontFamily: 'PlayfairDisplay'),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay'),
                   ),
                   const Text(
                     " To reset your password, go to the login page, click on 'Forgot Password', and follow the instructions sent to your email.",
-                    style: TextStyle(fontSize: 14, color: Colors.black,fontFamily: 'PlayfairDisplay'),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay'),
                   ),
                   SizedBox(height: 10),
                   const Text(
                     "2. How can I contact support?",
-                    style: TextStyle(fontSize: 16, color: Colors.black,fontFamily: 'PlayfairDisplay'),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay'),
                   ),
                   const Text(
                     " You can contact support by emailing us at pramudinethmini01@gmail.com option in the app.",
-                    style: TextStyle(fontSize: 14, color: Colors.black,fontFamily: 'PlayfairDisplay'),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay'),
                   ),
                   SizedBox(height: 10),
                   const Text(
                     "3. What if I have a problem with the app?",
-                    style: TextStyle(fontSize: 16, color: Colors.black,fontFamily: 'PlayfairDisplay'),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay'),
                   ),
                   const Text(
                     " If you encounter any issues with the app, please reach out to our support team. We are available 24/7 to assist you.",
-                    style: TextStyle(fontSize: 14, color: Colors.black,fontFamily: 'PlayfairDisplay'),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay'),
                   ),
                   SizedBox(height: 20),
                   const Text(
@@ -113,11 +130,17 @@ class _SupportScreenState extends State<SupportScreen> {
                   ),
                   const Text(
                     "Email: pramudinethmini01@gmail.com ",
-                    style: TextStyle(fontSize: 16, color: Colors.black,fontFamily: 'PlayfairDisplay'),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay'),
                   ),
                   const Text(
                     "Phone: 0761051516",
-                    style: TextStyle(fontSize: 16, color: Colors.black,fontFamily: 'PlayfairDisplay'),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay'),
                   ),
                   SizedBox(height: 20),
                 ],
