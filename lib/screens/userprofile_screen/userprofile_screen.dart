@@ -85,12 +85,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 child: ElevatedButton(
                   onPressed: () => _showUpdateDialog(context, userProvider),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: const Color.fromARGB(255, 2, 50, 90),
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                   ),
-                  child: const Text('Update Profile'),
+                  child: const Text(style: TextStyle(color: Colors.white),'Update Profile'),
                 ),
               ),
             ],

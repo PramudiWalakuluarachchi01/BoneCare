@@ -149,6 +149,7 @@ class AuthUserProvider with ChangeNotifier {
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
+      Logger().f(response.statusCode);
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);

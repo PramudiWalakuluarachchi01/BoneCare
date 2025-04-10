@@ -161,7 +161,7 @@ class SignupScreen extends StatelessWidget {
                           style: TextStyle(fontSize: 14, color: Colors.black)),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pop(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const SignupScreen()));

@@ -33,7 +33,9 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
   }
 
   Future<void> fetchUserProgress() async {
-    String userId = storage.read(key: "userId").toString();
+    String? userId = await storage.read(key: "userId");
+    if (userId == null) return;
+
     final response =
         await http.get(Uri.parse("$_baseUrl/api/progress/$userId"));
 
@@ -60,7 +62,9 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
   }
 
   Future<void> submitProgress() async {
-    String userId = storage.read(key: "userId").toString();
+    String? userId = await storage.read(key: "userId");
+    if (userId == null) return;
+
     for (int week = 0; week < 4; week++) {
       final response = await http.post(
         Uri.parse("$_baseUrl/api/progress"),
@@ -75,7 +79,6 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
 
       if (response.statusCode != 200) {
         Logger().e("Failed to submit week ${week + 1}: ${response.body}");
-        // Optionally show an error message
       }
     }
 
@@ -96,73 +99,93 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          Positioned(
-            top: 50,
-            left: 20,
-            right: 20,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SafeArea(
+            child: Column(
               children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Text(
-                  'Monthly Progress',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 10,
-                        color: Colors.white.withOpacity(0.5),
-                        offset: Offset(2, 2),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon:
+                            Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Monthly Progress',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10,
+                              color: Colors.white.withOpacity(0.5),
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 48),
                     ],
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: submitProgress,
-                  child: Text(
-                    "Save",
+                SizedBox(height: 140),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 178, 191, 201)
+                            .withOpacity(0.9),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 10,
+                            offset: Offset(2, 4),
+                          ),
+                        ],
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildSection("Physiotherapy Tracking",
+                                isTaskCompletionCompleted, taskActiveStep),
+                            SizedBox(height: 20),
+                            _buildSection("Pain Level",
+                                isOverallProgressCompleted, overallActiveStep),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 2, 55, 99),
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: submitProgress,
+                    child: Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
                   ),
                 ),
               ],
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 120.0, left: 20.0, right: 20.0, bottom: 20.0),
-              child: Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color:
-                      const Color.fromARGB(255, 178, 191, 201).withOpacity(0.9),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: Offset(2, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildSection("Physiotherapy Tracking",
-                        isTaskCompletionCompleted, taskActiveStep),
-                    SizedBox(height: 20),
-                    _buildSection("Pain Level", isOverallProgressCompleted,
-                        overallActiveStep),
-                  ],
-                ),
-              ),
             ),
           ),
         ],

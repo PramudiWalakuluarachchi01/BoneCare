@@ -1,5 +1,7 @@
 import 'package:bone_care/providers/authuser_provider.dart';
+import 'package:bone_care/screens/home_screen/home_screen.dart'; // Import HomeScreen
 import 'package:bone_care/screens/signin_screen/signin.dart';
+import 'package:bone_care/screens/support_screen/support_screen.dart';
 import 'package:bone_care/screens/terms_and_conditions/terms_and_conditions.dart';
 import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +53,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onTap: () {
                   Provider.of<AuthUserProvider>(context, listen: false)
                       .signOut();
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SigninScreen()),
+                        builder: (context) => const SupportScreen()),
                   );
                 },
                 child: textInsideContainer("Support", 50, 400,
@@ -67,11 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Large Bottom Container (Log Out) with RED text
               GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SigninScreen()),
-                  );
+                  Navigator.pop(context);
                 },
                 child: textInsideContainer("Sign Out", 70, 400,
                     Colors.white.withOpacity(0.5), Colors.red, 22),
@@ -83,13 +81,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             left: 20,
             child: Row(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: Colors.white, size: 28),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
                 const Text(
                   "Settings",
                   style: TextStyle(
