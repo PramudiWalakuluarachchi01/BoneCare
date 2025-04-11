@@ -124,7 +124,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: const Text('Close', style: TextStyle(color: Color.fromARGB(255, 0, 51, 94))),
           ),
         ],
       ),
@@ -151,13 +151,13 @@ class PhysioButton extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         width: MediaQuery.of(context).size.width * 0.8, // Buttons take 80% of screen width
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(16),
+          color: const Color.fromARGB(129, 253, 254, 255),
+          borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.black26,
-              blurRadius: 6,
-              offset: const Offset(2, 2),
+              blurRadius: 10,
+              color: Colors.black.withOpacity(0.5),
+              offset: Offset(2, 2),
             ),
           ],
         ),

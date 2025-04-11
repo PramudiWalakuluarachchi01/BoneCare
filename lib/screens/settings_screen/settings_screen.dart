@@ -57,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         builder: (context) => const SupportScreen()),
                   );
                 },
-                child: textInsideContainer("Support", 50, 400,
+                child: textInsideContainer("Technical Support", 50, 400,
                     Colors.white.withOpacity(0.5), Colors.black),
               ),
               const SizedBox(height: 20),

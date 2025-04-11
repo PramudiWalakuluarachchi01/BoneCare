@@ -126,7 +126,7 @@ class _SocialPostState extends State<SocialPost> {
                       child: Text(
                         '+${count - 3}',
                         style: const TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 24,
                             fontWeight: FontWeight.bold),
                       ),
@@ -144,7 +144,7 @@ class _SocialPostState extends State<SocialPost> {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
-        color: Color.fromARGB(136, 173, 158, 158),
+        color: Color.fromARGB(10, 255, 255, 255),
       ),
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -176,7 +176,7 @@ class _SocialPostState extends State<SocialPost> {
                       Text(
                         widget.userName,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Jura',
@@ -209,7 +209,7 @@ class _SocialPostState extends State<SocialPost> {
             widget.caption,
             style: const TextStyle(
               fontFamily: 'Jura',
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
           const SizedBox(
@@ -217,7 +217,7 @@ class _SocialPostState extends State<SocialPost> {
           ),
           GestureDetector(
             onTap: () {
-              CustomNavigation.nextPage2(
+              Customnavigation.nextPage2(
                   context, PostImageViewScreen(imageList: widget.imageUrls));
             },
             child: buildImages(),
@@ -227,7 +227,7 @@ class _SocialPostState extends State<SocialPost> {
               ? Text(
                   'Likes: ${likedCount.toString()}',
                   style:
-                      const TextStyle(color: Colors.white, fontFamily: 'Jura'),
+                      const TextStyle(color: Colors.black, fontFamily: 'Jura'),
                 )
               : const SizedBox(),
           Row(
@@ -241,12 +241,12 @@ class _SocialPostState extends State<SocialPost> {
                       likedStatus
                           ? Icons.thumb_up_alt_rounded
                           : Icons.thumb_up_outlined,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     const SizedBox(width: 5),
                     const Text(
                       'Like',
-                      style: TextStyle(fontFamily: 'Jura', color: Colors.white),
+                      style: TextStyle(fontFamily: 'Jura', color: Colors.black),
                     ),
                   ],
                 ),
@@ -261,12 +261,12 @@ class _SocialPostState extends State<SocialPost> {
                   children: [
                     Icon(
                       CupertinoIcons.chat_bubble_fill,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     SizedBox(width: 5),
                     Text(
                       'Comment',
-                      style: TextStyle(fontFamily: 'Jura', color: Colors.white),
+                      style: TextStyle(fontFamily: 'Jura', color: Colors.black),
                     ),
                   ],
                 ),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bone_care/providers/social_platform_provider.dart';
 import 'package:bone_care/screens/social_platform/widgets/add_post_section.dart';
 import 'package:bone_care/screens/social_platform/widgets/social_post.dart';
+import 'package:bone_care/services/api_url.dart';
 import 'package:bone_care/services/social_platform_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,8 @@ class SocialPlatformScreen extends StatefulWidget {
 
 class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
   final ScrollController _scrollController = ScrollController();
-  final String imageURL =
-      'https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg';
-  final String profilePicURL =
-      'https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg';
+  final String imageURL = '${apiUrl()}/api/post-image/';
+  final String profilePicURL = '${apiUrl()}/api/profile-picture/';
 
   @override
   void initState() {
@@ -50,7 +49,7 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -79,176 +78,155 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 137, 189, 238),
-      body: Stack(
-        children: [
-          // Background Image in Front (but behind text & buttons)
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Image.asset(
-                'assets/images/pic14.png',
-                width: double.infinity,
-                height: 220, // Adjust as needed
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+      body: Consumer<SocialPostsProvider>(
+        builder: (context, provider, child) {
+          if (provider.isLoading && provider.posts.isEmpty) {
+            return const Center(
+                child: CupertinoActivityIndicator(
+              color: Colors.black,
+              radius: 12,
+              animating: true,
+            ));
+          }
 
-          // The main content (text & posts)
-          Consumer<SocialPostsProvider>(
-            builder: (context, provider, child) {
-              if (provider.isLoading && provider.posts.isEmpty) {
-                return const Center(
-                  child: CupertinoActivityIndicator(
-                    color: Colors.white,
-                    radius: 12,
-                    animating: true,
+          if (provider.posts.isEmpty) {
+            return LiquidPullToRefresh(
+              showChildOpacityTransition: false,
+              backgroundColor: Colors.black,
+              color: const Color.fromARGB(60, 0, 0, 0),
+              height: 40,
+              onRefresh: _refreshPosts,
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                    ),
                   ),
-                );
-              }
-
-              if (provider.posts.isEmpty) {
-                return LiquidPullToRefresh(
-                  showChildOpacityTransition: false,
-                  backgroundColor: Colors.white,
-                  color: const Color.fromARGB(60, 0, 0, 0),
-                  height: 40,
-                  onRefresh: _refreshPosts,
-                  child: Stack(
-                    children: [
-                      SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                        ),
+                  const Center(
+                    child: Text(
+                      'No posts available',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Playfairdisplay',
+                        fontSize: 24,
                       ),
-                      const Center(
-                        child: Text(
-                          'No posts available',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Jura',
-                            fontSize: 24,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return LiquidPullToRefresh(
+            showChildOpacityTransition: false,
+            backgroundColor: Colors.black,
+            color: const Color.fromARGB(60, 0, 0, 0),
+            height: 40,
+            onRefresh: _refreshPosts,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    _showAddPostBottomSheet(context);
+                  },
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 10,
+                    ),
+                    child: SafeArea(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: Colors.black,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }
-
-              return LiquidPullToRefresh(
-                showChildOpacityTransition: false,
-                backgroundColor: Colors.white,
-                color: const Color.fromARGB(60, 0, 0, 0),
-                height: 40,
-                onRefresh: _refreshPosts,
-                child: Column(
-                  children: [
-                    // Add Post Section (Above pic14.png)
-                    GestureDetector(
-                      onTap: () {
-                        _showAddPostBottomSheet(context);
-                      },
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 10,
-                        ),
-                        child: SafeArea(
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              border: Border.all(
-                                color: Colors.white54,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Share Your Thoughts...',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontFamily: 'Playfairdisplay',
                               ),
                             ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Share Your Thoughts...',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontFamily: 'Jura',
+                            Icon(
+                              Icons.camera_alt,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: provider.posts.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == provider.posts.length) {
+                        return provider.hasMorePosts
+                            ? Container(
+                                margin: const EdgeInsets.only(bottom: 80),
+                                child: const Center(
+                                  child: CupertinoActivityIndicator(
+                                    color: Colors.black,
+                                    radius: 12,
+                                    animating: true,
                                   ),
                                 ),
-                                Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
+                              )
+                            : Container(
+                                margin: const EdgeInsets.only(bottom: 80),
+                                child: const Text(
+                                  'You reached the end of the page',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontFamily: 'Playfairdisplay'),
                                 ),
-                              ],
-                            ),
+                              );
+                      } else {
+                        final post = provider.posts[index];
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: SocialPost(
+                            postID: post['postID'].toString(),
+                            imageUrls: List<String>.from(post['imageIds']
+                                .map((id) => imageURL + id.toString())),
+                            caption: post['content'] as String,
+                            timeStamp: post['timestamp'] as String,
+                            userName:
+                                '${post['firstName']} ${post['lastName']}',
+                            userProfilePicURL: post['profilePictureId'] != null
+                                ? profilePicURL +
+                                    post['profilePictureId'].toString()
+                                : '',
+                            likedCount: post['like_count'],
+                            userLikedStatus: post['liked'],
                           ),
-                        ),
-                      ),
-                    ),
-
-                    // Post List (Remains Above pic14.png)
-                    Expanded(
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: provider.posts.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index == provider.posts.length) {
-                            return provider.hasMorePosts
-                                ? Container(
-                                    margin: const EdgeInsets.only(bottom: 80),
-                                    child: const Center(
-                                      child: CupertinoActivityIndicator(
-                                        color: Colors.white,
-                                        radius: 12,
-                                        animating: true,
-                                      ),
-                                    ),
-                                  )
-                                : Container(
-                                    margin: const EdgeInsets.only(bottom: 80),
-                                    child: const Text(
-                                      'You reached the end of the page',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontFamily: 'Jura'),
-                                    ),
-                                  );
-                          } else {
-                            final post = provider.posts[index];
-                            return Container(
-                              margin: const EdgeInsets.only(bottom: 10),
-                              child: SocialPost(
-                                postID: post['postID'].toString(),
-                                imageUrls: List<String>.from(post['imageIds']
-                                    .map((id) => imageURL + id.toString())),
-                                caption: post['content'] as String,
-                                timeStamp: post['timestamp'] as String,
-                                userName:
-                                    '${post['firstName']} ${post['lastName']}',
-                                userProfilePicURL: post['profilePictureId'] != null
-                                    ? profilePicURL +
-                                        post['profilePictureId'].toString()
-                                    : '',
-                                likedCount: post['like_count'],
-                                userLikedStatus: post['liked'],
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+                        );
+                      }
+                    },
+                  ),
                 ),
-              );
-            },
-          ),
-        ],
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -257,7 +257,7 @@ class _MonthlyprogressScreenState extends State<MonthlyprogressScreen> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[700],
+                      backgroundColor: const Color.fromARGB(255, 2, 55, 99),
                       minimumSize: Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

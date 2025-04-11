@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomNavigation {
+class Customnavigation {
   static void nextPage(BuildContext context, Widget widget) {
     Navigator.push(
         context,

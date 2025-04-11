@@ -90,7 +90,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                   ),
-                  child: const Text(style: TextStyle(color: Colors.white),'Update Profile'),
+                  child: const Text(style: TextStyle(color: Colors.white,fontFamily: 'Playfairdisplay'),'Update Profile'),
                 ),
               ),
             ],
@@ -115,7 +115,7 @@ Widget _buildInfoField(String label, String value, double top) {
       child: Text(
         '$label: $value',
         style: const TextStyle(
-            fontSize: 16, color: Colors.black, fontWeight: FontWeight.w500),
+            fontSize: 16, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Playfairdisplay'),
       ),
     ),
   );

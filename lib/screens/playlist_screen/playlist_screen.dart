@@ -64,41 +64,41 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          // Back Button
+
+          // Combined Back Button and Title
           Positioned(
-            top: 50,
+            top: 70,
             left: 20,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
-              onPressed: () {
+            right: 20,
+            child: GestureDetector(
+              onTap: () {
                 Navigator.pop(context);
               },
-            ),
-          ),
-          // Title Text
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.1,
-            left: 30,
-            child: const Center(
-              child: Text(
-                'Playlist',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontFamily: 'Playfairdisplay',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 10,
+              child: Row(
+                children: const [
+                  Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                  SizedBox(width: 10),
+                  Text(
+                    'Playlist',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontFamily: 'Playfairdisplay',
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      offset: Offset(2, 2),
+                      shadows: [
+                        Shadow(
+                          blurRadius: 10,
+                          color: Colors.white,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
           ),
+
           // List of Videos
           Positioned.fill(
             top: MediaQuery.of(context).size.height * 0.25,
@@ -113,40 +113,52 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                         final videoId = getVideoId(videoUrls[index]);
                         final thumbnailUrl = 'https://img.youtube.com/vi/$videoId/mqdefault.jpg';
 
-                        return Card(
-                          color: Colors.white,
-                          elevation: 4.0,
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListTile(
-                            leading: Image.network(
-                              thumbnailUrl,
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Icon(Icons.error, color: Colors.red);
-                              },
-                            ),
-                            // Remove title text (Video 1, 2, etc.)
-                            title: null,
-                            subtitle: Text(
-                              videoDescriptions[index],
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.black87, // Ensure it's visible
-                              ),
-                            ),
-                            trailing: const Icon(Icons.play_arrow),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PlayerScreen(videoId: videoId),
-                                ),
-                              );
-                            },
-                          ),
-                        );
+        return Card(
+          elevation: 4.0,
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(129, 253, 254, 255),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 10,
+                  color: Colors.black.withOpacity(0.5),
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+            child: ListTile(
+              leading: Image.network(
+                thumbnailUrl,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(Icons.error, color: Colors.red);
+                },
+              ),
+              // Remove title text (Video 1, 2, etc.)
+              title: null,
+              subtitle: Text(
+                videoDescriptions[index],
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.black87,
+                ),
+              ),
+              trailing: const Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PlayerScreen(videoId: videoId),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
                       },
                     ),
                   ),

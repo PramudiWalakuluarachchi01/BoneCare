@@ -111,21 +111,21 @@ class _AddPostSectionState extends State<AddPostSection> {
                     decoration: InputDecoration(
                       hintText: 'Share your thoughts...',
                       hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
+                        color: Colors.black.withOpacity(0.5),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                   Positioned(
                     right: 0,
                     top: 8,
                     child: IconButton(
-                      icon: const Icon(Icons.camera_alt, color: Colors.white),
+                      icon: const Icon(Icons.camera_alt, color: Colors.black),
                       onPressed: _pickImage,
                     ),
                   ),

@@ -47,7 +47,15 @@ class _SupportScreenState extends State<SupportScreen> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'PlayfairDisplay',
                           color: Colors.white,
+                           shadows: [
+                      Shadow(
+                        blurRadius: 10,
+                        color: Colors.white54,
+                        offset: Offset(2, 2),
+                      ),
+                             ]
                         ),
+                        
                       ),
                     ],
                   ),
@@ -56,94 +64,108 @@ class _SupportScreenState extends State<SupportScreen> {
             ],
           ),
 
-          // Adding content below the app bar
+          // Content with padding and container styling
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(
-                  16.0), // Adding padding for better spacing
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Frequently Asked Questions",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontFamily: 'PlayfairDisplay',
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+          color: const Color.fromARGB(129, 253, 254, 255),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              color: Colors.black.withOpacity(0.5),
+              offset: Offset(2, 2),
+            ),
+          ],
+        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Frequently Asked Questions",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontFamily: 'PlayfairDisplay',
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  const Text(
-                    "1. How do I reset my password?",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontFamily: 'PlayfairDisplay'),
-                  ),
-                  const Text(
-                    " To reset your password, go to the login page, click on 'Forgot Password', and follow the instructions sent to your email.",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontFamily: 'PlayfairDisplay'),
-                  ),
-                  SizedBox(height: 10),
-                  const Text(
-                    "2. How can I contact support?",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontFamily: 'PlayfairDisplay'),
-                  ),
-                  const Text(
-                    " You can contact support by emailing us at pramudinethmini01@gmail.com option in the app.",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontFamily: 'PlayfairDisplay'),
-                  ),
-                  SizedBox(height: 10),
-                  const Text(
-                    "3. What if I have a problem with the app?",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontFamily: 'PlayfairDisplay'),
-                  ),
-                  const Text(
-                    " If you encounter any issues with the app, please reach out to our support team. We are available 24/7 to assist you.",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontFamily: 'PlayfairDisplay'),
-                  ),
-                  SizedBox(height: 20),
-                  const Text(
-                    "Contact Us",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontFamily: 'PlayfairDisplay',
+                    const SizedBox(height: 10),
+                    const Text(
+                      "1. How do I reset my password?",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'PlayfairDisplay'),
                     ),
-                  ),
-                  const Text(
-                    "Email: pramudinethmini01@gmail.com ",
-                    style: TextStyle(
-                        fontSize: 16,
+                    const Text(
+                      " To reset your password, go to the login page, click on 'Forgot Password', and follow the instructions sent to your email.",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontFamily: 'PlayfairDisplay'),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "2. How can I contact support?",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'PlayfairDisplay'),
+                    ),
+                    const Text(
+                      " You can contact support by emailing us at pramudinethmini01@gmail.com.",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontFamily: 'PlayfairDisplay'),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "3. What if I have a problem with the app?",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'PlayfairDisplay'),
+                    ),
+                    const Text(
+                      " If you encounter any issues with the app, please reach out to our support team. We are available 24/7 to assist you.",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontFamily: 'PlayfairDisplay'),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Contact Us",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontFamily: 'PlayfairDisplay'),
-                  ),
-                  const Text(
-                    "Phone: 0761051516",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontFamily: 'PlayfairDisplay'),
-                  ),
-                  SizedBox(height: 20),
-                ],
+                        fontFamily: 'PlayfairDisplay',
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      "Email: pramudinethmini01@gmail.com",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'PlayfairDisplay'),
+                    ),
+                    const Text(
+                      "Phone: 0761051516",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'PlayfairDisplay'),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           ),

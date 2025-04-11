@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:logger/logger.dart';
 
 class CommentSectionBuilder {
@@ -17,8 +16,7 @@ class CommentSectionBuilder {
   }
 
   // Function to post a comment
-  Future<void> _postComment(
-      String postID, String userID, String content) async {
+  Future<void> _postComment(String postID, String userID, String content) async {
     final String url = '${apiUrl()}/api/posts/$postID/comment';
 
     try {
@@ -50,9 +48,10 @@ class CommentSectionBuilder {
     // Fetch the userID from secure storage
     String? userID = await secureStorage.read(key: 'userID');
 
-    // Check if userID is available
+    // If userID is not available, navigate to SignIn screen
     if (userID == null) {
       Logger().e("User ID not found in secure storage.");
+      Navigator.pushReplacementNamed(context, '/sign-in');
       return;
     }
 
@@ -118,7 +117,7 @@ class CommentSectionBuilder {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.2),
+                                    color: Colors.black.withOpacity(0.2),
                                     borderRadius: const BorderRadius.vertical(
                                       top: Radius.circular(10),
                                     ),
@@ -134,7 +133,7 @@ class CommentSectionBuilder {
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10, top: 2, bottom: 4),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.2),
+                                    color: Colors.black.withOpacity(0.2),
                                     borderRadius: const BorderRadius.vertical(
                                       bottom: Radius.circular(10),
                                     ),
@@ -142,7 +141,7 @@ class CommentSectionBuilder {
                                   child: Text(
                                     comment['content'],
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -156,7 +155,7 @@ class CommentSectionBuilder {
                               Text(
                                 'No comments found',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontFamily: 'Jura',
                                   fontSize: 18,
                                 ),
@@ -192,20 +191,20 @@ class CommentSectionBuilder {
                             child: TextField(
                               controller: commentController,
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                               decoration: const InputDecoration(
                                 hintText: "Post a comment...",
                                 hintStyle: TextStyle(
                                   fontFamily: 'Jura',
-                                  color: Colors.white54,
+                                  color: Colors.black,
                                 ),
                                 border: InputBorder.none,
                               ),
                             ),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.send, color: Colors.white),
+                            icon: const Icon(Icons.send, color: Colors.black),
                             onPressed: () async {
                               // Get the comment text and send it to the backend
                               final String content = commentController.text;
