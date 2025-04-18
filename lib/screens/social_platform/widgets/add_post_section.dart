@@ -23,19 +23,7 @@ class _AddPostSectionState extends State<AddPostSection> {
   Future<void> _pickImage() async {
     // Check Android version and request appropriate permissions
     if (Platform.isAndroid) {
-      if (await Permission.storage.isGranted ||
-          (await Permission.manageExternalStorage.isGranted)) {
-        _selectImage();
-      } else {
-        await Permission.photos.request();
-        if (await Permission.manageExternalStorage.request().isGranted) {
-          Logger().i('Manage external storage permission granted on Android');
-          _selectImage();
-        } else {
-          Logger().e('Manage external storage permission denied on Android');
-          openAppSettings();
-        }
-      }
+      _selectImage();
     } else if (Platform.isIOS) {
       // iOS-specific permission request
       var status = await Permission.photos.status;
@@ -87,7 +75,7 @@ class _AddPostSectionState extends State<AddPostSection> {
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
-            color: Color(0xFF26292D),
+            color: Color.fromARGB(255, 235, 235, 235),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -111,11 +99,12 @@ class _AddPostSectionState extends State<AddPostSection> {
                     decoration: InputDecoration(
                       hintText: 'Share your thoughts...',
                       hintStyle: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withOpacity(0.8),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color.fromARGB(255, 137, 189, 238)),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 137, 189, 238)),
                       ),
                     ),
                     style: const TextStyle(
@@ -133,12 +122,25 @@ class _AddPostSectionState extends State<AddPostSection> {
                 ],
               ),
               const SizedBox(height: 10),
+              if (_imageFile != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.file(
+                      _imageFile!,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      width: 100,
+                    ),
+                  ),
+                ),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 137, 189, 238)),
-
+                    backgroundColor: WidgetStateProperty.all(
+                        const Color.fromARGB(255, 137, 189, 238)),
                   ),
                   onPressed: () {
                     widget.onPost(_postTextController.text, _imageFile);

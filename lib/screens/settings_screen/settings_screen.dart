@@ -1,8 +1,10 @@
 import 'package:bone_care/providers/authuser_provider.dart';
+import 'package:bone_care/screens/landing_screen/landing.dart';
 import 'package:bone_care/screens/support_screen/support_screen.dart';
 import 'package:bone_care/screens/terms_and_conditions/terms_and_conditions.dart';
 import 'package:bone_care/screens/userprofile_screen/userprofile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -13,6 +15,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,8 +70,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // Large Bottom Container (Log Out) with RED text
               GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
+                onTap: () async {
+                  await _storage.delete(key: 'userId');
+
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Landing(),
+                      ),
+                      (Route<dynamic> route) => false);
                 },
                 child: textInsideContainer("Sign Out", 70, 400,
                     Colors.white.withOpacity(0.5), Colors.red, 22),

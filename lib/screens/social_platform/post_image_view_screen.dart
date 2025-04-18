@@ -12,17 +12,16 @@ class PostImageViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(60, 0, 0, 0),
           centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 255, 255, 255)),
           title: const Text(
             'Images',
             style: TextStyle(
-              fontFamily: 'Playfairdisplay',
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
         ),

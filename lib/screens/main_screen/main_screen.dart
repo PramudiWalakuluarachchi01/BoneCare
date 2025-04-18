@@ -36,13 +36,13 @@ class _MainScreenState extends State<MainScreen> {
             child: CircleNavBar(
               activeIcons: const [
                 Icon(Icons.home, color: Colors.white),
-                Icon(Icons.chat, color: Colors.white),
+                Icon(Icons.groups, color: Colors.white),
                 Icon(Icons.fit_screen_sharp, color: Colors.white), // X-ray icon
                 Icon(Icons.settings, color: Colors.white),
               ],
               inactiveIcons: const [
                 Icon(Icons.home, color: Colors.grey),
-                Icon(Icons.chat, color: Colors.grey),
+                Icon(Icons.groups, color: Colors.grey),
                 Icon(Icons.fit_screen_sharp,
                     color: Colors.grey), // X-ray icon inactive
                 Icon(Icons.settings, color: Colors.grey),

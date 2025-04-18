@@ -49,7 +49,7 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 88, 88, 88),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -120,25 +120,25 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
             );
           }
 
-          return LiquidPullToRefresh(
-            showChildOpacityTransition: false,
-            backgroundColor: Colors.black,
-            color: const Color.fromARGB(60, 0, 0, 0),
-            height: 40,
-            onRefresh: _refreshPosts,
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    _showAddPostBottomSheet(context);
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 10,
-                    ),
-                    child: SafeArea(
+          return SafeArea(
+            child: LiquidPullToRefresh(
+              showChildOpacityTransition: false,
+              backgroundColor: Colors.black,
+              color: const Color.fromARGB(60, 0, 0, 0),
+              height: 40,
+              onRefresh: _refreshPosts,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _showAddPostBottomSheet(context);
+                    },
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 10,
+                      ),
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         width: double.infinity,
@@ -170,60 +170,61 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: provider.posts.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == provider.posts.length) {
-                        return provider.hasMorePosts
-                            ? Container(
-                                margin: const EdgeInsets.only(bottom: 80),
-                                child: const Center(
-                                  child: CupertinoActivityIndicator(
-                                    color: Colors.black,
-                                    radius: 12,
-                                    animating: true,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: const EdgeInsets.only(bottom: 80),
-                                child: const Text(
-                                  'You reached the end of the page',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 20,
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemCount: provider.posts.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == provider.posts.length) {
+                          return provider.hasMorePosts
+                              ? Container(
+                                  margin: const EdgeInsets.only(bottom: 80),
+                                  child: const Center(
+                                    child: CupertinoActivityIndicator(
                                       color: Colors.black,
-                                      fontFamily: 'Playfairdisplay'),
-                                ),
-                              );
-                      } else {
-                        final post = provider.posts[index];
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: SocialPost(
-                            postID: post['postID'].toString(),
-                            imageUrls: List<String>.from(post['imageIds']
-                                .map((id) => imageURL + id.toString())),
-                            caption: post['content'] as String,
-                            timeStamp: post['timestamp'] as String,
-                            userName:
-                                '${post['firstName']} ${post['lastName']}',
-                            userProfilePicURL: post['profilePictureId'] != null
-                                ? profilePicURL +
-                                    post['profilePictureId'].toString()
-                                : '',
-                            likedCount: post['like_count'],
-                            userLikedStatus: post['liked'],
-                          ),
-                        );
-                      }
-                    },
+                                      radius: 12,
+                                      animating: true,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  margin: const EdgeInsets.only(bottom: 80),
+                                  child: const Text(
+                                    'You reached the end of the page',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        fontFamily: 'Playfairdisplay'),
+                                  ),
+                                );
+                        } else {
+                          final post = provider.posts[index];
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: SocialPost(
+                              postID: post['postID'].toString(),
+                              imageUrls: List<String>.from(post['imageIds']
+                                  .map((id) => imageURL + id.toString())),
+                              caption: post['content'] as String,
+                              timeStamp: post['timestamp'] as String,
+                              userName:
+                                  '${post['name']}',
+                              userProfilePicURL: post['profilePictureId'] != null
+                                  ? profilePicURL +
+                                      post['profilePictureId'].toString()
+                                  : '',
+                              likedCount: post['like_count'],
+                              userLikedStatus: post['liked'],
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

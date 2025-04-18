@@ -1,14 +1,16 @@
+import 'dart:convert';
+
 import 'package:bone_care/services/api_url.dart';
 import 'package:bone_care/services/social_platform_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:logger/logger.dart';
 
 class CommentSectionBuilder {
   TextEditingController commentController = TextEditingController();
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  final String apiURL = apiUrl();
 
   // Function to fetch comments
   Future<List<dynamic>> _fetchComments(String postID) async {
@@ -16,8 +18,9 @@ class CommentSectionBuilder {
   }
 
   // Function to post a comment
-  Future<void> _postComment(String postID, String userID, String content) async {
-    final String url = '${apiUrl()}/api/posts/$postID/comment';
+  Future<void> _postComment(
+      String postID, String userID, String content) async {
+    final String url = '$apiURL/api/posts/$postID/comment';
 
     try {
       final response = await http.post(
@@ -43,10 +46,10 @@ class CommentSectionBuilder {
 
   // Function to show the bottom sheet
   void showBottomSheet(BuildContext context, String postID) async {
-    final String profilePicURL = '${apiUrl()}/api/profile-picture/';
+    final String profilePicURL = '$apiURL/api/profile-picture/';
 
     // Fetch the userID from secure storage
-    String? userID = await secureStorage.read(key: 'userID');
+    String? userID = await secureStorage.read(key: 'userId');
 
     // If userID is not available, navigate to SignIn screen
     if (userID == null) {
@@ -75,7 +78,7 @@ class CommentSectionBuilder {
             child: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
-                color: Color(0xFF26292D),
+                color: Color.fromARGB(255, 235, 235, 235),
               ),
               child: Column(
                 children: [
@@ -123,7 +126,7 @@ class CommentSectionBuilder {
                                     ),
                                   ),
                                   child: Text(
-                                    '${comment['firstName']} ${comment['lastName']}',
+                                    '${comment['name']}',
                                     style: const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold),
@@ -181,7 +184,7 @@ class CommentSectionBuilder {
                           Radius.circular(20),
                         ),
                         border: Border.all(
-                          color: Colors.white54,
+                          color: const Color.fromARGB(255, 26, 26, 26),
                         ),
                       ),
                       child: Row(
@@ -229,6 +232,7 @@ class CommentSectionBuilder {
                       ),
                     ),
                   ),
+                  SizedBox(height: 15)
                 ],
               ),
             ),

@@ -11,7 +11,7 @@ final String apiURL = apiUrl();
 class SocialPlatformService {
   // Method to fetch posts
   Future<List<dynamic>> fetchPosts({int offset = 0, int limit = 30}) async {
-    final String? userID = await secureStorage.read(key: 'userID');
+    final String? userID = await secureStorage.read(key: 'userId');
     try {
       final response = await http.get(Uri.parse(
           '$apiURL/api/posts?userId=$userID&offset=$offset&limit=$limit'));
@@ -27,7 +27,7 @@ class SocialPlatformService {
 
   // Method to toggle like
   Future<bool> toggleLike(String postId) async {
-    final String? userID = await secureStorage.read(key: 'userID');
+    final String? userID = await secureStorage.read(key: 'userId');
 
     try {
       final response = await http.post(
@@ -65,7 +65,7 @@ class SocialPlatformService {
 
   // Method to add a post
   Future<bool> addPost(String postText, File? imageFile) async {
-    final String? userID = await secureStorage.read(key: 'userID');
+    final String? userID = await secureStorage.read(key: 'userId');
     var request = http.MultipartRequest('POST', Uri.parse('$apiURL/api/add-posts'));
 
     request.fields['userId'] = userID ?? '';
