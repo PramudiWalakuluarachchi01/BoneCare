@@ -16,7 +16,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Forgot Password")),
+      backgroundColor: const Color.fromARGB(255, 137, 189, 238),
+      appBar: AppBar(
+        title: const Text("Forgot Password"),
+        backgroundColor: const Color.fromARGB(255, 137, 189, 238),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -48,7 +52,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: ${response['message']}")));
                 }
               },
-              child: const Text("Send OTP"),
+              child: const Text("Send OTP", style: TextStyle(color: Color.fromARGB(255, 1, 39, 75))),
             ),
           ],
         ),

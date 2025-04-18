@@ -47,7 +47,10 @@ class XRayDetectorScreenState extends State<XRayDetectorScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+            child: const Text('OK', style: TextStyle(color: const Color.fromARGB(255, 137, 189, 238))),
+            style: TextButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 4, 57, 100),
+            ),
           ),
         ],
       ),

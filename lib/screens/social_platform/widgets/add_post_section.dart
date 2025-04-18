@@ -77,7 +77,7 @@ class _AddPostSectionState extends State<AddPostSection> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData(fontFamily: 'Jura'),
+      data: ThemeData(fontFamily: 'Playfairdisplay'),
       child: Padding(
         padding: MediaQuery.of(context).viewInsets, // Handles keyboard overlap
         child: Container(
@@ -115,6 +115,7 @@ class _AddPostSectionState extends State<AddPostSection> {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Color.fromARGB(255, 137, 189, 238)),
                       ),
                     ),
                     style: const TextStyle(
@@ -136,16 +137,22 @@ class _AddPostSectionState extends State<AddPostSection> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      Theme.of(context).colorScheme.secondary,
-                    ),
+                          backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 137, 189, 238)),
+
                   ),
                   onPressed: () {
                     widget.onPost(_postTextController.text, _imageFile);
                     Navigator.pop(
                         context); // Close the bottom sheet after posting
                   },
-                  child: const Text('Post'),
+                  child: const Text(
+                    'Post',
+                    style: TextStyle(
+                      fontFamily: 'Playfairdisplay',
+                      fontSize: 16,
+                      color: Color.fromARGB(255, 1, 33, 59),
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -194,7 +194,7 @@ void _showUpdateDialog(BuildContext context, AuthUserProvider userProvider) {
             actions: [
               TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel')),
+                  child: const Text('Cancel', style: TextStyle(color: Color.fromARGB(255, 12, 34, 133)))),
               TextButton(
                 onPressed: () {
                   if (passwordController.text.isEmpty) {
@@ -217,7 +217,7 @@ void _showUpdateDialog(BuildContext context, AuthUserProvider userProvider) {
                   );
                   Navigator.pop(context);
                 },
-                child: const Text('Update'),
+                child: const Text('Update', style: TextStyle(color: Color.fromARGB(255, 12, 34, 133))),
               ),
             ],
           );
