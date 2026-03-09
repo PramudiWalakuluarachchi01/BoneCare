@@ -192,10 +192,10 @@ python app.py
 ---
 
 ## 📸 Screenshots
-<img src="https://github.com/PramudiWalakuluarachchi01/Shop_App/blob/1856c8ae32668c013e2c6adeb810ad9eb7a296bf/bone_care01.png"  width=200 height=300>
-<img src="https://github.com/PramudiWalakuluarachchi01/Shop_App/blob/1856c8ae32668c013e2c6adeb810ad9eb7a296bf/bone_care02.png"  width=200 height=300>
-<img src="https://github.com/PramudiWalakuluarachchi01/Shop_App/blob/1856c8ae32668c013e2c6adeb810ad9eb7a296bf/bone_care03.png"  width=200 height=300>
-<img src="https://github.com/PramudiWalakuluarachchi01/Shop_App/blob/1856c8ae32668c013e2c6adeb810ad9eb7a296bf/bone_care04.png"  width=200 height=300>
+<img src="https://github.com/PramudiWalakuluarachchi01/BoneCare/blob/main/bone_care_01.png?raw=true"  width=200 height=300>
+<img src="https://github.com/PramudiWalakuluarachchi01/BoneCare/blob/main/bone_care_02.png?raw=true"  width=200 height=300>
+<img src="https://github.com/PramudiWalakuluarachchi01/BoneCare/blob/main/bone_care_03.png?raw=true"  width=200 height=300>
+<img src="https://github.com/PramudiWalakuluarachchi01/BoneCare/blob/main/bone_care_04.png?raw=true"  width=200 height=300>
 
 ---
 
@@ -212,3 +212,4 @@ python app.py
 ## 👩‍💻 Author
 
 **Pramudi Walakuluarachchi**  
+
