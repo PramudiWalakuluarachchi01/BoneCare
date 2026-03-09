@@ -199,17 +199,10 @@ python app.py
 
 ---
 
-## 🚀 Future Improvements
 
-- Improve AI model accuracy  
-- Add doctor consultation module  
-- Real-time physiotherapy monitoring  
-- Cloud deployment  
-- Push notifications  
-
----
 
 ## 👩‍💻 Author
 
 **Pramudi Walakuluarachchi**  
+
 
